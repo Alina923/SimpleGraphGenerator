@@ -1,9 +1,11 @@
-﻿using SimpleGraphGenerator.Model;
+﻿using Microsoft.Win32;
+using SimpleGraphGenerator.Model;
 using SimpleGraphGenerator.Model.DotElements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -82,7 +84,7 @@ namespace SimpleGraphGenerator.ViewModel
             {
                 return new DelegateCommand((obj) =>
                 {
-                    gvp.generateGraph();
+                    gvp.GenerateGraph();
                     OnPropertyChanged(nameof(GraphImage));
                 });
             }
@@ -359,7 +361,7 @@ namespace SimpleGraphGenerator.ViewModel
                                 break;
 
                         }
-                        if(result)
+                        if (result)
                             AddNewAttrToList();
                         OnPropertyChanged();
                     }
@@ -381,7 +383,7 @@ namespace SimpleGraphGenerator.ViewModel
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if(SelectedAttr != null)
+                    if (SelectedAttr != null)
                     {
                         string[] str = SelectedAttr.Split();
                         bool result = false;
@@ -432,6 +434,19 @@ namespace SimpleGraphGenerator.ViewModel
             }
         }
 
+        public DelegateCommand ExportGraph 
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    if (saveFileDialog.ShowDialog() == true)
+                        gvp.ExportImage(saveFileDialog.FileName);
+                });
+            }
+        }
+
         public ViewModelMain()
         {
             gvp.graph = new Graph(GraphType.Graph, new Stmt_list());
@@ -454,7 +469,7 @@ namespace SimpleGraphGenerator.ViewModel
             if (properties.PropertyName != nameof(DotCode) && properties.PropertyName != nameof(GraphImage))
             {
                 DotCode = gvp.graph.ToCode();
-                gvp.generateGraph();
+                gvp.GenerateGraph();
                 OnPropertyChanged(nameof(GraphImage));
             }
         }

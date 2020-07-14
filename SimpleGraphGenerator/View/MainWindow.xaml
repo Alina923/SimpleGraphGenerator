@@ -15,26 +15,33 @@
         <vm:ViewModelMain />
     </Window.DataContext>
 
-    <Grid Margin="0,23
-          ,0,0">
+    <Grid Margin="0,23,0,0" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="371*"/>
-            <ColumnDefinition Width="408*"/>
+            <ColumnDefinition Width="385"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Image 
             x:Name="image1" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            Height="381" Width="392"
-            Margin="3,10,13,5" 
-            Source="{Binding GraphImage}" Grid.Column="2"/>
+            Height="{Binding ElementName=MainGrid, Path=Height}" 
+            Width="{Binding ElementName=MainGrid, Path=Width}" 
+            Margin="3,10,12,5" 
+            Source="{Binding GraphImage}" Grid.Column="1" Grid.RowSpan="2"/>
         <TabControl 
             HorizontalAlignment="Left" 
             VerticalAlignment="Stretch"
-            Width="385" Grid.ColumnSpan="3">
+            Width="385" Grid.RowSpan="2">
             <TabItem Header="Editor">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" x:Name ="EditorGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="215"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
                     <TextBox Text="{Binding FocusNode}" HorizontalAlignment="Left" Height="23" Margin="54,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="143"/>
                     <Label Content="Node" HorizontalAlignment="Left" Margin="5,41,0,0" VerticalAlignment="Top" Width="39"/>
                     <Button Command ="{Binding AddNode}" Content="Add" HorizontalAlignment="Left" Margin="201,45,0,0" VerticalAlignment="Top" Width="80" Height="23"/>
@@ -58,7 +65,7 @@
                     <Label Content="{Binding EdgeArrowType}" HorizontalAlignment="Left" Margin="85,100,0,0" VerticalAlignment="Top"/>
                     <Button Command ="{Binding AddEdge}" Content="Add" HorizontalAlignment="Left" Margin="200,103,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
                     <Button Command ="{Binding RemoveEdge}" Content="Remove" HorizontalAlignment="Left" Margin="286,103,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
-                    <Button Command ="{Binding ClearGraph}" Content="Clear graph" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Bottom" Width="81" Height="23"/>
+                    <Button Command ="{Binding ClearGraph}" Content="Clear graph" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="81" Height="23" Grid.Row="2"/>
                     <Label Content="Attributes" HorizontalAlignment="Left" Margin="5,131,0,0" VerticalAlignment="Top"/>
                     <ComboBox SelectedItem="{Binding NewAttrType}" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Width="90">
                         <ComboBoxItem>
@@ -85,8 +92,8 @@
                     <Label Content="Attribute =" HorizontalAlignment="Left" Margin="5,186,0,0" VerticalAlignment="Top"/>
                     <TextBox Text="{Binding AttrValue}" HorizontalAlignment="Left" Height="23" Margin="257,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"/>
                     <Label Content="Value =" HorizontalAlignment="Left" Margin="202,185,0,0" VerticalAlignment="Top"/>
-                    <ListBox ItemsSource="{Binding ViewAttrList}" SelectedItem="{Binding SelectedAttr}" HorizontalAlignment="Left" Height="122" Margin="10,218,0,0" VerticalAlignment="Top" Width="357"/>
-                    <Button Command ="{Binding RemoveAttribute}" Content="Remove" HorizontalAlignment="Left" Margin="286,345,0,0" VerticalAlignment="Top" Width="81" Height="23"/>
+                    <ListBox ItemsSource="{Binding ViewAttrList}" SelectedItem="{Binding SelectedAttr}" HorizontalAlignment="Left"  Margin="10,6,0,0" VerticalAlignment="Top" Grid.IsSharedSizeScope="True" Height="{Binding ElementName=EditorGrid, Path=ActualHeight}" Width="357" Grid.Row="1"/>
+                    <Button Command ="{Binding RemoveAttribute}" Content="Remove" HorizontalAlignment="Left" Margin="288,0,0,10" VerticalAlignment="Bottom" Width="81" Height="23" Grid.Row="2"/>
 
                 </Grid>
             </TabItem>
@@ -116,20 +123,16 @@
             VerticalAlignment="Top" 
             HorizontalAlignment="Stretch"
             Height="23" 
-            Margin="1,-23,0,0" Grid.ColumnSpan="3">
+            Margin="1,-23,0,0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="New Project"></MenuItem>
-                <MenuItem Header="Open Project"></MenuItem>
-                <MenuItem Header="Export Graph"></MenuItem>
+                <MenuItem 
+                    Command="{Binding ExportGraph}" 
+                    Header="Export Graph"/>
             </MenuItem>
-
             <MenuItem Header="Help">
-                <Button
+                <MenuItem 
                     Command="{Binding OpenHelp}"
-                    Content="GraphViz Reference"
-                    BorderThickness="0"
-                    Background="Transparent">
-                </Button>
+                    Header="GraphViz Reference"/>
             </MenuItem>
         </Menu>
     </Grid>

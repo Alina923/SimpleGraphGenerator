@@ -19,7 +19,7 @@ namespace SimpleGraphGenerator.Model
         public string DotCode { get => _dotCode; set => _dotCode = value; }
 
 
-        private BitmapImage loadPhoto(string path)
+        private BitmapImage LoadImage(string path)
         {
             if (!File.Exists(path))
             {
@@ -36,15 +36,15 @@ namespace SimpleGraphGenerator.Model
         }
 
         /// <summary>
-        /// Generates graph image from DotCode and puts it into GraphImage.
+        /// Generates graph from DotCode and puts it into GraphImage.
         /// </summary>
-        public void generateGraph()
+        public void GenerateGraph()
         {
             string exec = @".\external\dot.exe";
             string dotPath = @".\external\dotInput";
 
             File.Delete(dotPath);
-            File.Delete(dotPath + ".jpg");
+            File.Delete(dotPath + ".png");
 
             File.WriteAllText(dotPath, DotCode);
 
@@ -55,13 +55,23 @@ namespace SimpleGraphGenerator.Model
             process.StartInfo.CreateNoWindow = true;
 
             process.StartInfo.FileName = exec;
-            process.StartInfo.Arguments = "-Tjpg -O " + dotPath;
+            process.StartInfo.Arguments = "-Tpng -O " + dotPath;
 
             process.Start();
             process.WaitForExit();
 
 
-            GraphImage = loadPhoto(dotPath + ".jpg");
+            GraphImage = LoadImage(dotPath + ".png");
+        }
+
+        public void ExportImage(string path)
+        {
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(GraphImage));
+            using (var fileStream = new System.IO.FileStream(path, System.IO.FileMode.Create))
+            {
+                encoder.Save(fileStream);
+            }
         }
 
         public void RemoveNode(string id)
