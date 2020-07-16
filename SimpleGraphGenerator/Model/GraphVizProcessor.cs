@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace SimpleGraphGenerator.Model
 {
-    class GraphVizProcessor
+    public class GraphVizProcessor
     {
         private BitmapImage _graphImage = null;
         private string _dotCode = null; 
@@ -18,6 +18,10 @@ namespace SimpleGraphGenerator.Model
         public BitmapImage GraphImage { get => _graphImage; set => _graphImage = value; }
         public string DotCode { get => _dotCode; set => _dotCode = value; }
 
+        //public void GraphToDotCode()
+        //{
+        //    DotCode = graph.ToCode();
+        //}
 
         private BitmapImage LoadImage(string path)
         {
@@ -159,7 +163,7 @@ namespace SimpleGraphGenerator.Model
             }
         }
 
-        public void AddEdge(string id1, string id2 = null, Attr_list attrs = null)
+        public void AddEdge(string id1, string id2, Attr_list attrs = null)
         {
             if (!EdgeExists(id1, id2))
             {

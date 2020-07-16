@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleGraphGenerator.Model.DotElements
 {
-    class Edge_stmt : Stmt
+    public class Edge_stmt : Stmt
     {
         public Node node;
         public List<EdgeRHS> edgeRHS = new List<EdgeRHS>();
@@ -45,7 +45,7 @@ namespace SimpleGraphGenerator.Model.DotElements
         {
             StringBuilder str = new StringBuilder();
 
-            str.Append(node.ToCode() + " ");
+            str.Append(node.ToCode());
             
             foreach(var el in edgeRHS)
             {

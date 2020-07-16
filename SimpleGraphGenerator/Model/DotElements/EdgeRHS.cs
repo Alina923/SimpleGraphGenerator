@@ -29,10 +29,10 @@ namespace SimpleGraphGenerator.Model.DotElements
             switch (edgeop)
             {
                 case GraphType.Digraph:
-                    str.Append("->");
+                    str.Append(" -> ");
                     break;
                 case GraphType.Graph:
-                    str.Append("--");
+                    str.Append(" -- ");
                     break;
             }
 

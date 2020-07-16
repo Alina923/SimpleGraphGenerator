@@ -441,7 +441,8 @@ namespace SimpleGraphGenerator.ViewModel
                 return new DelegateCommand((obj) =>
                 {
                     SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    if (saveFileDialog.ShowDialog() == true)
+                    saveFileDialog.Filter = "Image (*.png) | *.png";
+                    if (saveFileDialog.ShowDialog( ) == true)
                         gvp.ExportImage(saveFileDialog.FileName);
                 });
             }

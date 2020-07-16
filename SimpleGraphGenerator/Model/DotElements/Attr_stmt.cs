@@ -30,13 +30,13 @@ namespace SimpleGraphGenerator.Model.DotElements
             switch (type)
             {
                 case AttrType.Graph:
-                    str.Append("graph ");
+                    str.Append("graph");
                     break;
                 case AttrType.Edge:
-                    str.Append("edge ");
+                    str.Append("edge");
                     break;
                 case AttrType.Node:
-                    str.Append("node ");
+                    str.Append("node");
                     break;
             }
 

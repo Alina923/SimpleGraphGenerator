@@ -22,7 +22,7 @@ namespace SimpleGraphGenerator.Model.DotElements
 
             foreach (var el in attrs)
             {
-                str.Append("[" + el.ToCode() + "]");
+                str.Append(" [" + el.ToCode() + "]");
             }
 
             return str.ToString();
